@@ -31,24 +31,31 @@ src/student_intro.py
 
 Do not edit the files in the `tests/` folder. The tests represent the expected behavior for this assignment.
 
-## How to complete the lab
+## Open this lab in GitHub Codespaces
+
+This repository is Codespaces-ready. It includes `.devcontainer/devcontainer.json`, which tells GitHub Codespaces to open the lab in a Python 3.12 development container with the Python and Pylance extensions installed.
 
 1. Accept the Classroom50 assignment link from Canvas.
 2. Open your new repository on GitHub.
-3. Click **Code**.
-4. Click **Codespaces**.
+3. Click the green **Code** button.
+4. Select the **Codespaces** tab.
 5. Click **Create codespace on main**.
-6. Wait for VS Code in the browser to finish loading.
-7. Open `src/student_intro.py`.
-8. Replace the placeholder return values with your own information.
-9. Run the tests in the terminal:
+6. Wait for the browser-based VS Code window to finish building the container. The setup command installs the packages in `requirements.txt`.
+
+If the **Codespaces** tab is not available, contact the instructor. Codespaces must be enabled for the course GitHub organization by the organization owner.
+
+## How to complete the lab
+
+1. Open `src/student_intro.py`.
+2. Replace the placeholder return values with your own information.
+3. Run the tests in the Codespaces terminal:
 
 ```bash
 pytest
 ```
 
-10. Fix your code until all tests pass.
-11. Commit and push your changes:
+4. Fix your code until all tests pass.
+5. Commit and push your changes:
 
 ```bash
 git status
@@ -57,8 +64,8 @@ git commit -m "Complete week 1 lab"
 git push
 ```
 
-12. Open the **Actions** tab on GitHub and confirm that the autograding workflow passes.
-13. Submit your repository link in Canvas if directed.
+6. Open the **Actions** tab on GitHub and confirm that the autograding workflow passes.
+7. Submit your repository link in Canvas if directed.
 
 ## Program requirements
 
