@@ -3,9 +3,14 @@ name: Classroom50 Autograding
 on:
   push:
   workflow_dispatch:
+  release:
+    types: [created, published, edited]
+
+permissions:
+  contents: write
 
 jobs:
-  test:
+  test-and-publish-result:
     runs-on: ubuntu-latest
 
     steps:
@@ -22,5 +27,33 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Run tests
-        run: pytest -v
+      - name: Run pytest and create pytest JSON report
+        id: pytest
+        continue-on-error: true
+        run: |
+          pytest -v --json-report --json-report-file=pytest-report.json
+
+      - name: Write Classroom50 result.json
+        if: always()
+        run: |
+          python scripts/write_result_json.py
+          cat result.json
+
+      - name: Upload result.json as workflow artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: result-json
+          path: result.json
+
+      - name: Attach result.json to submission release
+        if: always() && github.event_name == 'release'
+        uses: softprops/action-gh-release@v2
+        with:
+          files: result.json
+          fail_on_unmatched_files: true
+          tag_name: ${{ github.event.release.tag_name }}
+
+      - name: Fail workflow when tests fail
+        if: steps.pytest.outcome == 'failure'
+        run: exit 1

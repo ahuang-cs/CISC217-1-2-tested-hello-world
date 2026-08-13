@@ -155,3 +155,16 @@ Full credit requires:
 ## Academic integrity reminder
 
 You may ask for help understanding error messages, test output, Git commands, or Python syntax. You must submit work that you understand and can explain. Do not copy another student’s solution.
+
+## Autograding and Classroom50 score reporting
+
+This assignment includes a GitHub Actions workflow at `.github/workflows/classroom.yml`. The workflow:
+
+1. Installs the project dependencies.
+2. Runs the pytest unit tests.
+3. Writes a `result.json` file with the score and test feedback.
+4. Uploads `result.json` as a workflow artifact.
+5. When Classroom50 creates or updates the submission release, attaches `result.json` to that release so Classroom50 can read the score.
+
+Do not delete `.github/workflows/classroom.yml`, `scripts/write_result_json.py`, `requirements.txt`, or the `tests/` folder.
+
