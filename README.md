@@ -175,3 +175,13 @@ This assignment includes a GitHub Actions workflow at `.github/workflows/classro
 
 Do not delete `.github/workflows/classroom.yml`, `scripts/write_result_json.py`, `requirements.txt`, or the `tests/` folder.
 
+
+## Classroom50 Submission Result
+
+This repository includes a GitHub Actions workflow that runs on every push to `main`. The workflow runs `pytest`, writes `result.json`, and creates a GitHub Release with `result.json` attached. Classroom50 reads that release asset to show the autograded score.
+
+After pushing your work, check:
+
+1. **Actions**: the latest `Classroom50 Autograding` run should complete.
+2. **Releases**: a release named `Classroom50 Submission #` should contain `result.json`.
+3. **Classroom50**: the assignment should show the score after Classroom50 collects the latest submission result.

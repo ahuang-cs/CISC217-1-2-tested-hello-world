@@ -2,12 +2,16 @@ name: Classroom50 Autograding
 
 on:
   push:
+    branches: [ main ]
   workflow_dispatch:
-  release:
-    types: [created, published, edited]
 
 permissions:
   contents: write
+  actions: read
+
+concurrency:
+  group: classroom50-${{ github.ref }}
+  cancel-in-progress: false
 
 jobs:
   test-and-publish-result:
@@ -46,13 +50,17 @@ jobs:
           name: result-json
           path: result.json
 
-      - name: Attach result.json to submission release
-        if: always() && github.event_name == 'release'
-        uses: softprops/action-gh-release@v2
-        with:
-          files: result.json
-          fail_on_unmatched_files: true
-          tag_name: ${{ github.event.release.tag_name }}
+      - name: Create Classroom50 submission release
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG_NAME: classroom50-submission-${{ github.run_number }}
+          RELEASE_TITLE: Classroom50 Submission ${{ github.run_number }}
+        run: |
+          gh release create "$TAG_NAME" result.json \
+            --target "$GITHUB_SHA" \
+            --title "$RELEASE_TITLE" \
+            --notes "Autograded Classroom50 submission for commit $GITHUB_SHA."
 
       - name: Fail workflow when tests fail
         if: steps.pytest.outcome == 'failure'
